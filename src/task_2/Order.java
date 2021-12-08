@@ -8,52 +8,69 @@ public class Order
     private Integer orderNumber;
     private Integer tableNumber;
     private int size;
-    private Dish[] dishes;
+    private int capacity;
+
     private boolean isClosed;
-    private HashMap<Integer, Item> orderItems;
+
+    private Item[]orderItemsArray;
 
     Order(Integer orderNumber, Integer tableNumber)
     {
         this.orderNumber = orderNumber;
         this.tableNumber = tableNumber;
-        orderItems = new HashMap<Integer, Item>();
+
+        orderItemsArray=new Item[0];
+        capacity = 5;
+        size = 0;
     }
 
-    Order(Integer orderNumber, Integer tableNumber, HashMap<Integer, Item> orderItems )
+    Order(Integer orderNumber, Integer tableNumber, Item[] items)
     {
         this.orderNumber = orderNumber;
         this.tableNumber = tableNumber;
-        HashMap<Integer, Item> deepCopy = new HashMap<Integer, Item>();
-        for(Integer key : orderItems.keySet())
-        {
-            deepCopy.put(key, orderItems.get(key));
+        int n = items.length;
+        orderItemsArray=new Item[n];
+        for(int i=0; i<n; i++){
+            orderItemsArray[i]=items[i];
         }
-        this.orderItems = deepCopy;
+        size =n;
+        capacity =n+5;
+
     }
 
-    public boolean add(Dish dish)
+
+    public boolean add(Item item)
     {
-        //найти макс номер позиции, увелич на 1 и положить в пару в put
-        //orderItems.put(dish);
-        //Integer lastItemNumber = Collections.max(orderItems.keySet());
-        Integer lastItemNumber = 0;
-        for(Integer key : orderItems.keySet())
-        {
-            if(key>lastItemNumber)
-            {
-                lastItemNumber = key;
+        if(size == capacity){
+            capacity +=5;
+            Item[] resizedOrderItemsArray=new Item[capacity];
+            for(int i=0; i<size; i++){
+                resizedOrderItemsArray[i] = orderItemsArray[i];
+            }
+            orderItemsArray=resizedOrderItemsArray;
+        }
+        orderItemsArray[size]=item;
+        size++;
+
+        return true;
+    }
+
+
+    public boolean remove(String itemName)
+    {
+        for(int i=size-1; i>0; i--){
+            if( orderItemsArray[i].getName().equals(itemName)){
+                for(int j=i; j<size-1; j++){
+                    orderItemsArray[j]=orderItemsArray[j+1];
+                }
+                size--;
+                return true;
             }
         }
-        this.orderItems.put(lastItemNumber+1, dish);
-        return true;
-    }
 
-    public boolean remove(String dishName)
-    {
-        orderItems.remove(dishName);
-        return true;
+        return false;
     }
-
+/*
     public int removeAll(String dishName)
     {
         return 0 ;
@@ -88,5 +105,5 @@ public class Order
     {
         return new Dish[0];
     }
-
+*/
 }
