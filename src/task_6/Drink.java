@@ -1,7 +1,5 @@
 package task_6;
 
-import task_2.Item;
-
 public final class Drink implements Item
 {
     private float price;

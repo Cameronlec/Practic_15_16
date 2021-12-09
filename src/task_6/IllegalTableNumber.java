@@ -1,9 +1,12 @@
 package task_6;
 
-public class IllegalTableNumber extends Exception{
+import javax.management.RuntimeErrorException;
+
+public class IllegalTableNumber extends RuntimeErrorException {
     private String details;
+
     public IllegalTableNumber(String detail, String message) {
-        super(message);
+        super(new Error(message));
         this.details = detail;
     }
 

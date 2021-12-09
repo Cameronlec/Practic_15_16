@@ -20,7 +20,7 @@ public class OrderManager
 
     public void addOrder(Integer tableNumber, Order order) throws OrderAlreadyAddedException {
         if(restaurantOrders.containsKey(tableNumber)){
-            throw new OrderAlreadyAddedException("Ошибка добавления заказа", "К данному столику уже привязан заказ");
+            throw new OrderAlreadyAddedException("Ошибка добавления заказа", "Данный столик занят");
         }
 
         restaurantOrders.put(tableNumber, order);
@@ -37,18 +37,39 @@ public class OrderManager
         return internetOrders.get(address);
     }
 
+    public Order getOrder(Integer tableNumber){
+        if(!restaurantOrders.containsKey(tableNumber)){
+            throw new IllegalTableNumber("" + tableNumber, "Столика с таким номером не существует");
+        }
+        return restaurantOrders.get(tableNumber);
+    }
+
+
     public void removeOrder(String address){
         internetOrders.remove(address);
+    }
+
+    public void removeOrder(Integer tableNumber){
+        if(!restaurantOrders.containsKey(tableNumber)){
+            throw new IllegalTableNumber("" + tableNumber, "Столика с таким номером не существует");
+        }
+        internetOrders.remove(tableNumber);
     }
 
     public void addItemToOrder(String address, Item item){
         getOrder(address).addItem(item);
     }
 
+    public void addItemToOrder(Integer tableNumber, Item item){
+        if(!restaurantOrders.containsKey(tableNumber)){
+            throw new IllegalTableNumber("" + tableNumber, "Столика с таким номером не существует");
+        }
+        getOrder(tableNumber).addItem(item);
+    }
+
     public Order [] getOrdersArray(){
         //Order [] ordersArray = new Order[orders.size()];
         return internetOrders.values().toArray(new Order[0]);
-
     }
 
     public double getOrdersTotal(){
@@ -71,26 +92,4 @@ public class OrderManager
         return  count;
     }
 
-
-//    public void addOrder(Order newOrder)
-//    {
-//        //найти макс номер позиции, увелич на 1 и положить в пару в put
-//        //orderItems.put(newOrder);
-//        //Integer lastItemNumber = Collections.max(orderItems.keySet());
-//        Integer lastOrderNumber = 0;
-//        for(Integer key : orders.keySet())
-//        {
-//            if(key>lastOrderNumber)
-//            {
-//                lastOrderNumber = key;
-//            }
-//        }
-//        this.orders.put(lastOrderNumber+1, newOrder);
-//
-//    }
-
-//    public void removeOrder(Integer orderNumber)
-//    {
-//        orders.remove(orderNumber);
-//    }
 }

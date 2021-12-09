@@ -16,28 +16,50 @@ public class OrderManager
         orders=new HashMap<String, Order>();
     }
 
+    /*
+    −перегрузка метода добавления заказа.
+    В качестве параметров принимает строку – адрес и ссылку на заказ.
+     */
     public void addOrder(String address, Order order){
         orders.put(address, order);
     }
 
+    /*
+    −перегрузка метода получения заказа.
+     В качестве параметра принимает строку – адрес.
+     */
     public Order getOrder(String address){
         return orders.get(address);
     }
 
+    /*
+    −перегрузка метода удаления заказа.
+    В качестве параметра принимает строку – адрес заказа.
+     */
     public void removeOrder(String address){
         orders.remove(address);
     }
 
+    /*
+    −перегрузка метода добавления позиции к заказу.
+    В качестве параметра принимает адрес и Item.
+     */
     public void addItemToOrder(String address, Item item){
         getOrder(address).addItem(item);
     }
 
+    /*
+    −возвращающий массив имеющихся на данный момент интернет-заказов.
+     */
     public Order [] getOrdersArray(){
         //Order [] ordersArray = new Order[orders.size()];
         return orders.values().toArray(new Order[0]);
 
     }
 
+    /*
+    −возвращающий суммарную сумму имеющихся на данный момент интернет-заказов.
+     */
     public double getOrdersTotal(){
         double total=0.0;
 
@@ -48,6 +70,12 @@ public class OrderManager
         return total;
     }
 
+    /*
+    −возвращающий общее среди всех интернет-
+    заказов количество заказанных порций заданного блюда по его имени.
+    Принимает имя блюда в качестве параметра.
+    Методы должны работать с интерфейсными ссылками Order и Item.
+     */
     public int getItemCountByNameTotal(String name){
         int count=0;
         Order[] ordersArray=getOrdersArray();

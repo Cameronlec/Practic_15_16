@@ -97,7 +97,7 @@ public class InternetOrder {
  */
     public Item[] getItemsArray(){
         if(itemsCount==0){
-            return null;
+            return new Item[0];
         }
         Item[] items=new Item[itemsCount];
 
