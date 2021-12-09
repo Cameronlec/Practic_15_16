@@ -10,6 +10,9 @@ public final class Dish implements Item
 
     Dish(String name, String description)
     {
+        if (name==null||name.equals("")||description==null||description.equals("")){
+            throw new IllegalArgumentException("Неверные данные для нового блюда");
+        }
         this.cost =0;
         this.name=name;
         this.description=description;
@@ -17,6 +20,9 @@ public final class Dish implements Item
 
     Dish(float price, String name, String description)
     {
+        if (price<0 || name==null||name.equals("")||description==null||description.equals("")){
+            throw new IllegalArgumentException("Неверные данные для нового блюда");
+        }
         this.cost =price;
         this.name=name;
         this.description=description;

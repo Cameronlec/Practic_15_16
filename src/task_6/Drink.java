@@ -10,6 +10,9 @@ public final class Drink implements Item
 
     Drink(String name, String description)
     {
+        if (name==null||name.equals("")||description==null||description.equals("")){
+            throw new IllegalArgumentException("Неверные данные для нового блюда");
+        }
         this.price=0;
         this.name=name;
         this.description=description;
@@ -17,6 +20,9 @@ public final class Drink implements Item
 
     Drink(float price, String name, String description)
     {
+        if (price<0 || name==null||name.equals("")||description==null||description.equals("")){
+            throw new IllegalArgumentException("Неверные данные для нового блюда");
+        }
         this.price=price;
         this.name=name;
         this.description=description;

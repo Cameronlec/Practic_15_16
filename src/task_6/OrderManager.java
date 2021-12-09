@@ -7,25 +7,38 @@ import java.util.HashMap;
 
 public class OrderManager
 {
-    private Integer tableNumber;
-    private HashMap<String, Order> orders;
+    //private Integer tableNumber;
+    private HashMap<Integer, Order> restaurantOrders;
+    private HashMap<String, Order> internetOrders;
 
-    OrderManager(Integer tableNumber)
+    OrderManager()
     {
-        this.tableNumber=tableNumber;
-        orders=new HashMap<String, Order>();
+//        this.tableNumber=tableNumber;
+        restaurantOrders = new HashMap<Integer, Order>();
+        internetOrders =new HashMap<String, Order>();
     }
 
-    public void addOrder(String address, Order order){
-        orders.put(address, order);
+    public void addOrder(Integer tableNumber, Order order) throws OrderAlreadyAddedException {
+        if(restaurantOrders.containsKey(tableNumber)){
+            throw new OrderAlreadyAddedException("Ошибка добавления заказа", "К данному столику уже привязан заказ");
+        }
+
+        restaurantOrders.put(tableNumber, order);
+    }
+
+    public void addOrder(String address, Order order) throws OrderAlreadyAddedException {
+        if(internetOrders.containsKey(address)){
+            throw new OrderAlreadyAddedException("Ошибка добавления заказа", "К данному адресу уже привязан заказ");
+        }
+        internetOrders.put(address, order);
     }
 
     public Order getOrder(String address){
-        return orders.get(address);
+        return internetOrders.get(address);
     }
 
     public void removeOrder(String address){
-        orders.remove(address);
+        internetOrders.remove(address);
     }
 
     public void addItemToOrder(String address, Item item){
@@ -34,7 +47,7 @@ public class OrderManager
 
     public Order [] getOrdersArray(){
         //Order [] ordersArray = new Order[orders.size()];
-        return orders.values().toArray(new Order[0]);
+        return internetOrders.values().toArray(new Order[0]);
 
     }
 
@@ -42,7 +55,7 @@ public class OrderManager
         double total=0.0;
 
         Order[] ordersArray=getOrdersArray();
-        for(int i=0;i<orders.size(); i++    ){
+        for(int i = 0; i< internetOrders.size(); i++    ){
             total+=ordersArray[i].getOrderCost();
         }
         return total;
@@ -51,7 +64,7 @@ public class OrderManager
     public int getItemCountByNameTotal(String name){
         int count=0;
         Order[] ordersArray=getOrdersArray();
-        for(int i=0;i<orders.size(); i++    ){
+        for(int i = 0; i< internetOrders.size(); i++    ){
             count+=ordersArray[i].getItemCountByName(name);
         }
 
