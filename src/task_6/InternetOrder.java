@@ -1,8 +1,5 @@
 package task_6;
 
-import task_2.Item;
-import task_3.CircularDoublyLinkedList;
-import task_4.Order;
 
 public class InternetOrder implements Order {
 

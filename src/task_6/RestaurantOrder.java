@@ -1,9 +1,5 @@
 package task_6;
 
-import task_2.Item;
-import task_4.Dish;
-import task_4.Order;
-
 public class RestaurantOrder implements Order
 {
     private Integer orderNumber;
@@ -93,7 +89,7 @@ public class RestaurantOrder implements Order
         return new String[0];
     }
 
-    public task_4.Dish[] sortedDishesByCostDesc()
+    public Dish[] sortedDishesByCostDesc()
     {
         return new Dish[0];
     }

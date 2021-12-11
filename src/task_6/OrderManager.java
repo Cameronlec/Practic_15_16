@@ -1,7 +1,5 @@
 package task_6;
 
-import task_2.Item;
-import task_4.Order;
 
 import java.util.HashMap;
 

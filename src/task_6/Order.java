@@ -1,6 +1,5 @@
 package task_6;
 
-import task_2.Item;
 
 public interface Order {
     boolean addItem(Item addingItem);
